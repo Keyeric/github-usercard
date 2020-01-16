@@ -2,7 +2,11 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
-
+axios
+.get("https://api.github.com/users/Keyeric")
+.then(response => {
+  console.log(response);
+});
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
    data in order to use it to build your component function 
@@ -43,8 +47,49 @@ const followersArray = [];
     <p>Bio: {users bio}</p>
   </div>
 </div>
-
 */
+
+function GitCard(APCri) {
+  const
+    card = document.createElement("div"),
+    gitImg = document.createElement("img"),
+    gitInfo = document.createElement("div"),
+    gitH3 = document.createElement("h3"),
+    gitUser = document.createElement("p"),
+    gitLocation = document.createElement("p"),
+    gitProfile = document.createElement("p"),
+    profileLink = document.createElement("a"),
+    gitFollowers = document.createElement("p"),
+    gitFollowing = document.createElement("p"),
+    gitBio = document.createElement("p");
+
+  card.append(gitImg, gitInfo);
+  // card.append(gitInfo);
+  gitInfo.append(gitH3, gitUser, gitLocation, gitProfile, gitFollowers, gitFollowing, gitBio);
+  // gitInfo.append(gitUser);
+  // gitInfo.append(gitLocation);
+  // gitInfo.append(gitProfile);
+  gitProfile.append(profileLink);
+  // gitInfo.append(gitFollowers);
+  // gitInfo.append(gitFollowing);
+  // gitInfo.append(gitBio);
+
+
+  card.classList.add("card");
+  gitImg.src = APCri.avatar_url;
+  gitInfo.classList.add("card-info");
+  gitH3.classList.add("name");
+  gitUser.classList.add("username")
+  
+  gitLocation.textContent = `${APCri.location}`;
+  profileLink.href = APCri.html_url;
+  gitProfile.textContent = `Profile: ${profileLink}`;
+  gitFollowers.textContent = APCri.followers;
+  gitFollowing.textContent = APCri.following;
+  gitBio.textContent = APCri.bio;
+
+  return card;
+}
 
 /* List of LS Instructors Github username's: 
   tetondan
