@@ -110,7 +110,7 @@ function GitCard(APCri) {
   gitProfile.textContent = `Profile: `;
   gitFollowers.textContent = `Followers: ${APCri.followers}`;
   gitFollowing.textContent = `Following: ${APCri.following}`;
-  gitBio.textContent = APCri.bio;
+  gitBio.textContent = `Bio: ${APCri.bio}`;
 
   gitProfile.appendChild(profileLink);
   return card;
