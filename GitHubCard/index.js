@@ -14,7 +14,8 @@
 
 /* Step 4: Pass the data received from Github into your function, 
            create a new component and add it to the DOM as a child of .cards
-*/const entryPoint = document.querySelector(".cards");
+*/
+const entryPoint = document.querySelector(".cards");
 axios
 .get("https://api.github.com/users/Keyeric")
 .then(response => {
@@ -37,7 +38,18 @@ axios
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = [
+  'lgv-0',
+  'tatek1993',
+  'Dlray89',
+  'cristinaedens',
+  'jasheloper'
+];
+
+for (let i = 0; i < followersArray.length; i++)
+axios.get("https://api.github.com/users/" + followersArray[i]).then((response) => {
+  entryPoint.appendChild(GitCard(response.data));
+})
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -75,10 +87,10 @@ function GitCard(APCri) {
   card.append(gitImg, gitInfo);
   // card.append(gitInfo);
   gitInfo.append(gitH3, gitUser, gitLocation, gitProfile, gitFollowers, gitFollowing, gitBio);
+  // gitInfo.append(gitH3);
   // gitInfo.append(gitUser);
   // gitInfo.append(gitLocation);
-  // gitInfo.append(gitProfile);
-  gitProfile.append(profileLink);
+  // gitInfo.append(gitProfile);  
   // gitInfo.append(gitFollowers);
   // gitInfo.append(gitFollowing);
   // gitInfo.append(gitBio);
@@ -90,13 +102,17 @@ function GitCard(APCri) {
   gitH3.classList.add("name");
   gitUser.classList.add("username")
 
-  gitLocation.textContent = `${APCri.location}`;
+  gitLocation.textContent = APCri.location == null ? "Location not available" : APCri.location;
   profileLink.href = APCri.html_url;
-  gitProfile.textContent = `Profile: ${profileLink}`;
-  gitFollowers.textContent = APCri.followers;
-  gitFollowing.textContent = APCri.following;
+  profileLink.textContent = APCri.login;
+  gitH3.textContent = APCri.name;
+  gitUser.textContent = APCri.login;
+  gitProfile.textContent = `Profile: `;
+  gitFollowers.textContent = `Followers: ${APCri.followers}`;
+  gitFollowing.textContent = `Following: ${APCri.following}`;
   gitBio.textContent = APCri.bio;
 
+  gitProfile.appendChild(profileLink);
   return card;
 }
 
